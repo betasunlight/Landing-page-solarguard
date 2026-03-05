@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply for Solar Financing — SolarGuard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ─── RESET ──────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#FAFAF7;
+  color:#1A1A1A;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+/* ─── TOKENS ─────────────────────────────────────────────────────────────── */
+:root{
+  --green:    #1D6B3E;
+  --green-dk: #0F3D22;
+  --green-md: #2A8050;
+  --green-lt: #E8F5EE;
+  --sun:      #F59E0B;
+  --sun-lt:   #FEF3C7;
+  --sun-dk:   #B45309;
+  --earth:    #0C1B0F;
+  --cream:    #FAFAF7;
+  --warm:     #F5F0E8;
+  --white:    #FFFFFF;
+  --g1:       #F4F4F0;
+  --g2:       #E8E8E2;
+  --g3:       #C8C8BE;
+  --g5:       #6B6B65;
+  --g7:       #3A3A34;
+  --g9:       #1A1A14;
+  --red:      #EF4444;
+  --red-lt:   #FEF2F2;
+
+  --f-display: 'Cabinet Grotesk', sans-serif;
+  --f-serif:   'Lora', Georgia, serif;
+  --f-body:    'DM Sans', sans-serif;
+  --f-mono:    'DM Mono', monospace;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(250,250,247,.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--g2);
+  padding:0 28px;
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.logo{display:flex;align-items:baseline;gap:2px;font-family:var(--f-display);font-weight:900;font-size:19px;text-decoration:none}
+.logo-b{color:var(--sun)}
+.logo-sg{color:var(--green-dk)}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--green);margin:0 1px 1px;align-self:flex-end}
+.nav-back{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:14px;font-weight:500;color:var(--g5);text-decoration:none;
+  transition:color .15s;
+}
+.nav-back:hover{color:var(--green)}
+.nav-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-step-pill{
+  font-family:var(--f-mono);font-size:11px;color:var(--g5);
+  background:var(--g1);border:1px solid var(--g2);
+  padding:5px 12px;border-radius:100px;
+  letter-spacing:.5px;
+}
+.nav-step-pill span{color:var(--green);font-weight:500}
+
+/* ─── PROGRESS BAR ───────────────────────────────────────────────────────── */
+#progress-bar{
+  position:fixed;top:64px;left:0;right:0;z-index:998;
+  height:3px;background:var(--g2);
+}
+#progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--green),var(--sun));
+  transition:width .45s cubic-bezier(.4,0,.2,1);
+  width:14%;
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────────────────────────── */
+.page-shell{
+  min-height:100vh;
+  padding-top:67px;
+  display:grid;
+  grid-template-columns:1fr 380px;
+}
+
+.form-col{
+  padding:56px 56px 80px 40px;
+  max-width:700px;
+  justify-self:end;
+  width:100%;
+}
+
+.aside-col{
+  background:var(--earth);
+  position:sticky;top:67px;
+  height:calc(100vh - 67px);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+
+/* ─── STEP SYSTEM ────────────────────────────────────────────────────────── */
+.step-panel{display:none}
+.step-panel.active{display:block}
+
+/* ─── STEP HEADER ────────────────────────────────────────────────────────── */
+.step-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--f-mono);font-size:11px;
+  color:var(--green);letter-spacing:1.4px;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.step-eyebrow::before{content:'';display:inline-block;width:18px;height:1.5px;background:currentColor}
+
+.step-h1{
+  font-family:var(--f-display);font-weight:900;
+  font-size:clamp(28px,3.2vw,40px);
+  line-height:1.0;letter-spacing:-1.2px;
+  color:var(--earth);margin-bottom:10px;
+}
+.step-h1 .serif{font-family:var(--f-serif);font-style:italic;color:var(--green)}
+
+.step-sub{
+  font-size:15px;line-height:1.65;color:var(--g5);
+  margin-bottom:38px;max-width:520px;
+}
+
+/* ─── FORM ELEMENTS ──────────────────────────────────────────────────────── */
+.form-group{margin-bottom:22px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row.trio{grid-template-columns:1fr 1fr 1fr}
+
+label{
+  display:block;
+  font-size:11px;font-weight:700;
+  color:var(--g7);letter-spacing:.7px;
+  text-transform:uppercase;margin-bottom:7px;
+}
+label .opt{font-weight:400;color:var(--g3);text-transform:none;letter-spacing:0}
+
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=number],
+select,
+textarea{
+  width:100%;padding:13px 16px;
+  border:1.5px solid var(--g2);border-radius:12px;
+  font-family:var(--f-body);font-size:15px;color:var(--g9);
+  background:var(--white);outline:none;
+  transition:border-color .15s,box-shadow .15s;
+  appearance:none;-webkit-appearance:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(29,107,62,.1);
+}
+input::placeholder,textarea::placeholder{color:var(--g3)}
+input.err,select.err,textarea.err{
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(239,68,68,.08);
+}
+.err-msg{
+  font-size:12px;color:var(--red);margin-top:5px;display:none;
+}
+.err-msg.show{display:block}
+
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6B65' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:42px;cursor:pointer;
+}
+textarea{resize:vertical;min-height:90px}
+
+/* ─── OPTION CARDS ───────────────────────────────────────────────────────── */
+.option-cards{
+  display:grid;gap:12px;
+}
+.option-cards.col-2{grid-template-columns:1fr 1fr}
+.option-cards.col-3{grid-template-columns:1fr 1fr 1fr}
+
+.opt-card{
+  position:relative;cursor:pointer;
+}
+.opt-card input[type=radio],
+.opt-card input[type=checkbox]{
+  position:absolute;opacity:0;width:0;height:0;
+}
+.opt-card-body{
+  border:1.5px solid var(--g2);border-radius:16px;
+  padding:18px 16px;background:var(--white);
+  transition:all .18s;
+  display:flex;flex-direction:column;gap:4px;
+}
+.opt-card:hover .opt-card-body{border-color:var(--green);background:var(--green-lt)}
+.opt-card input:checked ~ .opt-card-body{
+  border-color:var(--green);
+  background:var(--green-lt);
+  box-shadow:0 0 0 1px var(--green);
+}
+.opt-card-icon{font-size:26px;margin-bottom:6px}
+.opt-card-title{font-family:var(--f-display);font-size:15px;font-weight:800;color:var(--earth)}
+.opt-card-sub{font-size:12px;color:var(--g5);line-height:1.4}
+.opt-card-price{font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--green);margin-top:4px}
+.opt-card-specs{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.spec-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:600;color:var(--green-dk);
+  background:var(--green-lt);border:1px solid rgba(29,107,62,.18);
+  padding:3px 8px;border-radius:100px;white-space:nowrap;
+}
+.opt-card input:checked ~ .opt-card-body .spec-pill{
+  background:rgba(29,107,62,.15);border-color:rgba(29,107,62,.3);
+}
+
+.opt-card input:checked ~ .opt-card-body .opt-card-title{color:var(--green-dk)}
+.opt-card input:checked ~ .opt-card-body .opt-card-sub{color:var(--green-md)}
+
+/* Checkmark badge */
+.opt-card input:checked ~ .opt-card-body::after{
+  content:'✓';
+  position:absolute;top:12px;right:12px;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--green);color:#fff;
+  font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.opt-card-body{position:relative}
+
+/* ─── RANGE SLIDER ───────────────────────────────────────────────────────── */
+.slider-wrap{position:relative;padding-bottom:28px}
+.slider-track{
+  position:relative;height:6px;
+  background:var(--g2);border-radius:3px;
+  margin:14px 0 8px;
+}
+.slider-fill{
+  position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(90deg,var(--green),var(--green-md));
+  border-radius:3px;pointer-events:none;
+  transition:width .1s;
+}
+input[type=range]{
+  position:absolute;top:50%;transform:translateY(-50%);
+  left:0;width:100%;height:24px;
+  appearance:none;-webkit-appearance:none;
+  background:transparent;cursor:pointer;
+  border:none;box-shadow:none;padding:0;
+}
+input[type=range]:focus{box-shadow:none;border:none}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--white);border:2.5px solid var(--green);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  cursor:grab;transition:transform .15s;
+}
+input[type=range]::-webkit-slider-thumb:active{
+  cursor:grabbing;transform:scale(1.2);
+}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--white);border:2.5px solid var(--green);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  cursor:grab;
+}
+.slider-labels{
+  display:flex;justify-content:space-between;
+  font-family:var(--f-mono);font-size:10px;color:var(--g3);
+  position:absolute;bottom:0;left:0;right:0;
+}
+.slider-val{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--green-lt);border:1px solid var(--green);
+  padding:5px 14px;border-radius:100px;margin-bottom:8px;
+  font-family:var(--f-display);font-size:18px;font-weight:800;color:var(--green-dk);
+}
+
+/* ─── ESTIMATE PANEL ─────────────────────────────────────────────────────── */
+.estimate-box{
+  background:var(--green-dk);border-radius:20px;
+  padding:22px;margin:24px 0;
+}
+.eb-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.eb-label{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.6px;text-transform:uppercase}
+.eb-val{font-family:var(--f-display);font-size:32px;font-weight:900;color:#fff}
+.eb-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
+.eb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.eb-cell{background:rgba(255,255,255,.06);border-radius:12px;padding:12px}
+.eb-cell-label{font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.eb-cell-val{font-size:14px;font-weight:700;color:rgba(255,255,255,.8)}
+.eb-cell-val.positive{color:#4ade80}
+.eb-note{font-size:11px;color:rgba(255,255,255,.25);margin-top:12px;line-height:1.5}
+
+/* ─── INFO CALLOUT ───────────────────────────────────────────────────────── */
+.info-callout{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--sun-lt);border:1px solid rgba(245,158,11,.3);
+  border-radius:14px;padding:14px 16px;margin-bottom:22px;
+  font-size:13px;color:var(--sun-dk);line-height:1.55;
+}
+.info-callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.info-callout.green{background:var(--green-lt);border-color:rgba(29,107,62,.25);color:var(--green-dk)}
+.info-callout.green .info-callout-icon{color:var(--green)}
+
+/* ─── CHECKBOX FIELDS ────────────────────────────────────────────────────── */
+.check-row{
+  display:flex;align-items:flex-start;gap:12px;
+  margin-bottom:14px;cursor:pointer;
+}
+.check-row input[type=checkbox]{
+  width:20px;height:20px;min-width:20px;
+  border:1.5px solid var(--g2);border-radius:6px;
+  background:var(--white);cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  transition:all .15s;margin-top:1px;flex-shrink:0;
+}
+.check-row input:checked{
+  background:var(--green);border-color:var(--green);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;
+}
+.check-row input:focus{box-shadow:0 0 0 3px rgba(29,107,62,.1);border-color:var(--green)}
+.check-label{font-size:14px;color:var(--g7);line-height:1.55}
+.check-label a{color:var(--green);text-decoration:underline;text-decoration-color:rgba(29,107,62,.3)}
+.check-label a:hover{text-decoration-color:var(--green)}
+
+/* ─── DIVIDER ────────────────────────────────────────────────────────────── */
+.form-divider{
+  display:flex;align-items:center;gap:14px;
+  margin:28px 0;color:var(--g3);font-size:12px;
+}
+.form-divider::before,.form-divider::after{
+  content:'';flex:1;height:1px;background:var(--g2);
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--f-display);font-size:15px;font-weight:700;
+  padding:13px 26px;border-radius:100px;border:none;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+  white-space:nowrap;text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 4px 20px rgba(29,107,62,.22)}
+.btn-primary:hover{background:var(--green-dk);box-shadow:0 8px 32px rgba(29,107,62,.32)}
+.btn-sun{background:var(--sun);color:var(--earth);box-shadow:0 4px 20px rgba(245,158,11,.25)}
+.btn-sun:hover{background:#E08D00;box-shadow:0 8px 32px rgba(245,158,11,.38)}
+.btn-ghost{background:transparent;color:var(--green);border:1.5px solid var(--g2)}
+.btn-ghost:hover{border-color:var(--green);background:var(--green-lt)}
+.btn-lg{padding:15px 32px;font-size:16px}
+.btn-full{width:100%;justify-content:center}
+.btn-row{display:flex;gap:12px;align-items:center;margin-top:32px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none !important}
+
+/* Loading spinner in button */
+.btn .spinner{
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+  animation:spin .7s linear infinite;display:none;
+}
+.btn.loading .spinner{display:block}
+.btn.loading .btn-text{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── STEP NAV DOTS ──────────────────────────────────────────────────────── */
+.step-dots{
+  display:flex;gap:6px;margin-bottom:36px;
+}
+.step-dot{
+  width:32px;height:4px;border-radius:2px;background:var(--g2);
+  transition:all .3s;cursor:pointer;
+}
+.step-dot.active{background:var(--green);width:48px}
+.step-dot.done{background:var(--green-md);opacity:.5}
+
+/* ─── ASIDE PANEL ────────────────────────────────────────────────────────── */
+.aside-top{
+  padding:40px 32px 28px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  flex-shrink:0;
+}
+.aside-logo{
+  display:flex;align-items:baseline;gap:2px;
+  font-family:var(--f-display);font-weight:900;font-size:16px;
+  margin-bottom:28px;
+}
+.aside-logo-b{color:var(--sun)}
+.aside-logo-sg{color:rgba(255,255,255,.5)}
+.aside-logo-dot{width:5px;height:5px;border-radius:50%;background:var(--green);margin:0 1px 1px;align-self:flex-end}
+
+.aside-heading{
+  font-family:var(--f-display);font-weight:900;
+  font-size:22px;line-height:1.05;letter-spacing:-.5px;
+  color:#fff;margin-bottom:10px;
+}
+.aside-heading .serif{font-family:var(--f-serif);font-style:italic;color:var(--sun)}
+.aside-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6}
+
+.aside-body{padding:24px 32px;flex:1;overflow-y:auto}
+
+/* Trust points */
+.trust-items{display:flex;flex-direction:column;gap:16px;margin-bottom:28px}
+.trust-item{
+  display:flex;gap:12px;align-items:flex-start;
+}
+.trust-icon{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+}
+.trust-title{font-size:13px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:2px}
+.trust-body{font-size:12px;color:rgba(255,255,255,.38);line-height:1.5}
+
+/* Stats row */
+.aside-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  margin-bottom:24px;
+}
+.aside-stat{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:14px;
+}
+.aside-stat-val{
+  font-family:var(--f-display);font-size:22px;font-weight:900;color:#fff;
+}
+.aside-stat-lbl{font-size:10px;color:rgba(255,255,255,.3);margin-top:2px}
+
+/* Live ticker */
+.aside-live{
+  background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.15);
+  border-radius:12px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;color:rgba(255,255,255,.45);
+}
+.aside-live-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+
+/* Lenders strip */
+.aside-lenders{
+  margin-top:auto;padding:20px 32px;
+  border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;
+}
+.aside-lenders-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:10px}
+.lender-pills{display:flex;flex-wrap:wrap;gap:6px}
+.lender-pill{
+  font-size:10px;font-weight:600;
+  color:rgba(255,255,255,.4);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  padding:4px 10px;border-radius:100px;
+}
+
+/* ─── SUCCESS SCREEN ─────────────────────────────────────────────────────── */
+#success-screen{
+  display:none;
+  flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;min-height:60vh;padding:40px 20px;
+}
+.success-icon{
+  width:80px;height:80px;border-radius:50%;
+  background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;margin:0 auto 28px;
+  animation:pop .5s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success-h{font-family:var(--f-display);font-size:36px;font-weight:900;color:var(--earth);letter-spacing:-1px;margin-bottom:12px}
+.success-h .serif{font-family:var(--f-serif);font-style:italic;color:var(--green)}
+.success-p{font-size:16px;color:var(--g5);line-height:1.7;max-width:440px;margin:0 auto 32px}
+
+.ref-box{
+  background:var(--green-lt);border:1.5px solid var(--green);
+  border-radius:14px;padding:16px 28px;margin-bottom:32px;
+  display:inline-flex;flex-direction:column;align-items:center;gap:4px;
+}
+.ref-label{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.7px;text-transform:uppercase}
+.ref-code{font-family:var(--f-mono);font-size:22px;font-weight:500;color:var(--green-dk)}
+
+.success-next{
+  display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;
+  margin:0 auto;
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────────────────────────── */
+.fade-in{animation:fadeIn .4s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── MOBILE ─────────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .page-shell{grid-template-columns:1fr}
+  .aside-col{display:none}
+  .form-col{padding:40px 24px 80px;justify-self:start;max-width:100%}
+}
+@media(max-width:560px){
+  .form-row{grid-template-columns:1fr}
+  .form-row.trio{grid-template-columns:1fr 1fr}
+  .option-cards.col-3{grid-template-columns:1fr}
+  .btn-row{flex-direction:column}
+  .btn-row .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ═════════════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to site
+    </a>
+    <a href="index.html" class="logo">
+      <span class="logo-sg">Solar</span><span class="logo-sg" style="color:var(--sun)">Guard</span>
+      <div class="logo-dot"></div>
+    </a>
+    <div class="nav-step-pill" id="step-label">Step <span id="step-num">1</span> of 5</div>
+  </div>
+</nav>
+
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<!-- ══ MAIN SHELL ══════════════════════════════════════════════════════════ -->
+<div class="page-shell">
+
+  <!-- ── FORM COLUMN ──────────────────────────────────────────────────── -->
+  <main class="form-col" id="form-col">
+
+    <!-- STEP DOTS -->
+    <div class="step-dots" id="step-dots">
+      <div class="step-dot active" onclick="goTo(1)"></div>
+      <div class="step-dot" onclick="goTo(2)"></div>
+      <div class="step-dot" onclick="goTo(3)"></div>
+      <div class="step-dot" onclick="goTo(4)"></div>
+      <div class="step-dot" onclick="goTo(5)"></div>
+    </div>
+
+    <!-- ── STEP 1: WHO ARE YOU ──────────────────────────────────────── -->
+    <div class="step-panel active fade-in" id="step-1">
+      <div class="step-eyebrow">Step 1 of 5 — Account Type</div>
+      <h1 class="step-h1">Who are you<br>applying <span class="serif">for?</span></h1>
+      <p class="step-sub">Tell us who will be using the solar system. This helps us match you to the right financing product.</p>
+
+      <div class="form-group">
+        <label>I am applying as</label>
+        <div class="option-cards col-2">
+          <label class="opt-card">
+            <input type="radio" name="applicant_type" value="individual" checked>
+            <div class="opt-card-body">
+              <div class="opt-card-icon">👤</div>
+              <div class="opt-card-title">Individual</div>
+              <div class="opt-card-sub">Personal home or apartment</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="applicant_type" value="business">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏢</div>
+              <div class="opt-card-title">Business</div>
+              <div class="opt-card-sub">Office, shop, factory, or farm</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>What best describes your current energy situation?</label>
+        <div class="option-cards">
+          <label class="opt-card">
+            <input type="radio" name="energy_situation" value="generator_only" checked>
+            <div class="opt-card-body" style="flex-direction:row;align-items:center;gap:14px">
+              <div style="font-size:22px">⛽</div>
+              <div>
+                <div class="opt-card-title">Generator only</div>
+                <div class="opt-card-sub">I rely on petrol or diesel generator for most of my power</div>
+              </div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="energy_situation" value="grid_unreliable">
+            <div class="opt-card-body" style="flex-direction:row;align-items:center;gap:14px">
+              <div style="font-size:22px">⚡</div>
+              <div>
+                <div class="opt-card-title">Grid + generator backup</div>
+                <div class="opt-card-sub">I have NEPA but the supply is unreliable</div>
+              </div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="energy_situation" value="no_power">
+            <div class="opt-card-body" style="flex-direction:row;align-items:center;gap:14px">
+              <div style="font-size:22px">🌑</div>
+              <div>
+                <div class="opt-card-title">No reliable power at all</div>
+                <div class="opt-card-sub">I need a complete off-grid solar solution</div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary btn-lg" onclick="nextStep()">
+          <span class="btn-text">Continue →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: PERSONAL DETAILS ──────────────────────────────────── -->
+    <div class="step-panel fade-in" id="step-2">
+      <div class="step-eyebrow">Step 2 of 5 — Personal Details</div>
+      <h1 class="step-h1">Your <span class="serif">contact</span><br>information</h1>
+      <p class="step-sub">Used for your application and to match you with a certified installer in your area.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="e.g. Chukwuemeka" autocomplete="given-name">
+          <div class="err-msg" id="err-firstName">Please enter your first name</div>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="e.g. Okonkwo" autocomplete="family-name">
+          <div class="err-msg" id="err-lastName">Please enter your last name</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="0801 234 5678" autocomplete="tel">
+        <div class="err-msg" id="err-phone">Enter a valid Nigerian mobile number</div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address <span class="opt">(optional but recommended)</span></label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <div class="err-msg" id="err-email">Enter a valid email address</div>
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <select id="state">
+          <option value="">— Select your state —</option>
+          <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option>
+          <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option>
+          <option>Benue</option><option>Borno</option><option>Cross River</option>
+          <option>Delta</option><option>Ebonyi</option><option>Edo</option>
+          <option>Ekiti</option><option>Enugu</option><option>FCT — Abuja</option>
+          <option>Gombe</option><option>Imo</option><option>Jigawa</option>
+          <option>Kaduna</option><option>Kano</option><option>Katsina</option>
+          <option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+          <option>Lagos</option><option>Nasarawa</option><option>Niger</option>
+          <option>Ogun</option><option>Ondo</option><option>Osun</option>
+          <option>Oyo</option><option>Plateau</option><option>Rivers</option>
+          <option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+          <option>Zamfara</option>
+        </select>
+        <div class="err-msg" id="err-state">Please select your state</div>
+      </div>
+
+      <div class="form-row">
+      <div class="form-group">
+          <label>City / LGA</label>
+          <input type="text" id="city" placeholder="e.g. Lekki, Lagos">
+          <div class="err-msg" id="err-city">Please enter your city</div>
+        </div>
+
+      <div class="info-callout">
+        <div class="info-callout-icon">🔒</div>
+        Your data is encrypted and never sold. It's shared only with your chosen lender and installer to process your application.
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary btn-lg" onclick="nextStep()">
+          <span class="btn-text">Continue →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: SYSTEM SIZE ────────────────────────────────────────── -->
+    <div class="step-panel fade-in" id="step-3">
+      <div class="step-eyebrow">Step 3 of 5 — System Size</div>
+      <h1 class="step-h1">How much <span class="serif">power</span><br>do you need?</h1>
+      <p class="step-sub">We'll suggest a system size based on what you typically use. You can adjust this with your installer later.</p>
+
+      <div class="form-group">
+        <label>Typical monthly diesel / fuel spend</label>
+        <div class="slider-wrap">
+          <div class="slider-val" id="fuel-val">₦0</div>
+          <div class="slider-track">
+            <div class="slider-fill" id="fuel-fill" style="width:0%"></div>
+            <input type="range" id="fuel-slider" min="0" max="300000" step="5000" value="0"
+              oninput="updateFuelSlider(this.value)">
+          </div>
+          <div class="slider-labels"><span>₦0</span><span>₦150k</span><span>₦300k+</span></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Select your system size</label>
+        <div class="option-cards" id="pkg-cards" style="grid-template-columns:1fr 1fr">
+
+          <!-- 1.5 kVA -->
+          <label class="opt-card">
+            <input type="radio" name="system_size" value="1.5kva" checked>
+            <div class="opt-card-body">
+              <div class="opt-card-icon">💡</div>
+              <div class="opt-card-title">1.5 kVA</div>
+              <div class="opt-card-sub">1-bed flat — lights, fans, TV, phone charging, small fridge</div>
+              <div class="opt-card-specs">
+                <span class="spec-pill">⚡ 1.5 kVA Hybrid Inverter</span>
+                <span class="spec-pill">🔆 4 × 370W Panels (1.48 kWp)</span>
+                <span class="spec-pill">🔋 1 × 2.5 kWh Lithium Battery</span>
+              </div>
+              <div class="opt-card-price">₦82,814/mo · outright ₦1,223,854</div>
+            </div>
+          </label>
+
+          <!-- 2.5 kVA -->
+          <label class="opt-card">
+            <input type="radio" name="system_size" value="2.5kva">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏠</div>
+              <div class="opt-card-title">2.5 kVA</div>
+              <div class="opt-card-sub">2-bed home — fridge, TV, lights, fans, laptops</div>
+              <div class="opt-card-specs">
+                <span class="spec-pill">⚡ 2.5 kVA Hybrid Inverter</span>
+                <span class="spec-pill">🔆 6 × 370W Panels (2.22 kWp)</span>
+                <span class="spec-pill">🔋 1 × 3.5 kWh Lithium Battery</span>
+              </div>
+              <div class="opt-card-price">₦256,750/mo · outright ₦1,834,430</div>
+            </div>
+          </label>
+
+          <!-- 3.5 kVA -->
+          <label class="opt-card">
+            <input type="radio" name="system_size" value="3.5kva">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏡</div>
+              <div class="opt-card-title">3.5 kVA</div>
+              <div class="opt-card-sub">3-bed home — 1 AC, fridge, full lights &amp; fans, laptops, TV</div>
+              <div class="opt-card-specs">
+                <span class="spec-pill">⚡ 3.5 kVA Hybrid Inverter</span>
+                <span class="spec-pill">🔆 6 × 550W Panels (3.3 kWp)</span>
+                <span class="spec-pill">🔋 1 × 5 kWh Lithium Battery</span>
+              </div>
+              <div class="opt-card-price">₦169,898/mo · outright ₦2,837,193</div>
+            </div>
+          </label>
+
+          <!-- 5 kVA -->
+          <label class="opt-card">
+            <input type="radio" name="system_size" value="5kva">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏘️</div>
+              <div class="opt-card-title">5 kVA</div>
+              <div class="opt-card-sub">4-bed home or small office — 2 ACs, 2 fridges, full 3 kW load</div>
+              <div class="opt-card-specs">
+                <span class="spec-pill">⚡ 5 kVA Hybrid Inverter</span>
+                <span class="spec-pill">🔆 10 × 550W Panels (5.5 kWp)</span>
+                <span class="spec-pill">🔋 1 × 5 kWh Lithium Battery</span>
+              </div>
+              <div class="opt-card-price">₦235,034/mo · outright ₦3,473,405</div>
+            </div>
+          </label>
+
+          <!-- 8 kVA -->
+          <label class="opt-card">
+            <input type="radio" name="system_size" value="8kva">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏢</div>
+              <div class="opt-card-title">8 kVA</div>
+              <div class="opt-card-sub">Large home or SME — 3 ACs, 3 fridges, office equipment, 4.8 kW load</div>
+              <div class="opt-card-specs">
+                <span class="spec-pill">⚡ 8 kVA Hybrid Inverter</span>
+                <span class="spec-pill">🔆 18 × 550W Panels (9.9 kWp)</span>
+                <span class="spec-pill">🔋 1 × 10 kWh Lithium Battery</span>
+              </div>
+              <div class="opt-card-price">₦316,098/mo · outright ₦6,759,610</div>
+            </div>
+          </label>
+
+          <!-- 10 kVA -->
+          <label class="opt-card">
+            <input type="radio" name="system_size" value="10kva">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏭</div>
+              <div class="opt-card-title">10 kVA Premium</div>
+              <div class="opt-card-sub">Business / factory — 4 ACs, heavy loads, max 6 kW continuous</div>
+              <div class="opt-card-specs">
+                <span class="spec-pill">⚡ 10 kVA Hybrid Inverter</span>
+                <span class="spec-pill">🔆 20 × 550W Panels (11 kWp)</span>
+                <span class="spec-pill">🔋 2 × 10 kWh Lithium Battery (20 kWh)</span>
+              </div>
+              <div class="opt-card-price">₦514,800/mo · outright ₦8,544,120</div>
+            </div>
+          </label>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred loan tenure</label>
+        <div class="option-cards col-3" id="tenor-cards">
+          <label class="opt-card">
+            <input type="radio" name="tenor" value="12" checked>
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">12 months</div>
+              <div class="opt-card-sub">Higher monthly, less total interest</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="tenor" value="18">
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">18 months</div>
+              <div class="opt-card-sub">Balanced repayment</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="tenor" value="24">
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">24 months</div>
+              <div class="opt-card-sub">Most popular</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="tenor" value="36">
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">36 months</div>
+              <div class="opt-card-sub">Lowest monthly payment</div>
+            </div>
+          </label>
+        </div>
+        <div class="err-msg" id="err-tenor" style="display:none">This package is not available on the selected tenor — please choose another</div>
+      </div>
+
+      <!-- Live estimate -->
+      <div class="estimate-box" id="estimate-box">
+        <div class="eb-row">
+          <div>
+            <div class="eb-label">Estimated Monthly Repayment</div>
+            <div class="eb-val" id="est-monthly">₦127,406</div>
+            <div class="eb-sub" id="est-sub">1.5 kVA · 12 months · indicative rate</div>
+          </div>
+        </div>
+        <div class="eb-grid">
+          <div class="eb-cell">
+            <div class="eb-cell-label">Outright System Cost</div>
+            <div class="eb-cell-val" id="est-cost">₦1,882,852</div>
+          </div>
+          <div class="eb-cell">
+            <div class="eb-cell-label">vs. Generator / month</div>
+            <div class="eb-cell-val positive" id="est-saving">—</div>
+          </div>
+        </div>
+        <div class="eb-note">* Estimate only. Actual rate and repayments are confirmed by your lender partner after credit assessment.</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary btn-lg" onclick="nextStep()">
+          <span class="btn-text">Continue →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: FINANCIAL PROFILE ─────────────────────────────────── -->
+    <div class="step-panel fade-in" id="step-4">
+      <div class="step-eyebrow">Step 4 of 5 — Financial Profile</div>
+      <h1 class="step-h1">Your <span class="serif">income</span><br>&amp; employment</h1>
+      <p class="step-sub">This helps lenders assess your application. All information is treated as confidential.</p>
+
+      <div class="form-group">
+        <label>Employment Status</label>
+        <div class="option-cards col-2">
+          <label class="opt-card">
+            <input type="radio" name="employment" value="salaried" checked>
+            <div class="opt-card-body">
+              <div class="opt-card-icon">💼</div>
+              <div class="opt-card-title">Salaried</div>
+              <div class="opt-card-sub">Full or part-time employee</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="employment" value="self_employed">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🛒</div>
+              <div class="opt-card-title">Self-Employed</div>
+              <div class="opt-card-sub">Business owner, trader, contractor</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="employment" value="civil_service">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🏛️</div>
+              <div class="opt-card-title">Civil Service</div>
+              <div class="opt-card-sub">Federal, state, or LG government</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="employment" value="other">
+            <div class="opt-card-body">
+              <div class="opt-card-icon">🎓</div>
+              <div class="opt-card-title">Other</div>
+              <div class="opt-card-sub">Retired, student, farming, NGO</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Employer / Business Name <span class="opt">(optional)</span></label>
+          <input type="text" id="employer" placeholder="e.g. Dangote Group">
+        </div>
+        <div class="form-group">
+          <label>Years at Current Job / Business</label>
+          <select id="years_employed">
+            <option value="">— Select —</option>
+            <option>Less than 1 year</option>
+            <option>1–2 years</option>
+            <option>3–5 years</option>
+            <option>More than 5 years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Approximate Monthly Net Income</label>
+        <select id="income_range">
+          <option value="">— Select range —</option>
+          <option value="under50k">Under ₦50,000</option>
+          <option value="50k-150k">₦50,000 – ₦150,000</option>
+          <option value="150k-300k">₦150,000 – ₦300,000</option>
+          <option value="300k-500k">₦300,000 – ₦500,000</option>
+          <option value="500k-1m">₦500,000 – ₦1,000,000</option>
+          <option value="over1m">Over ₦1,000,000</option>
+        </select>
+        <div class="err-msg" id="err-income">Please select your income range</div>
+      </div>
+
+      <div class="form-group">
+        <label>Do you have an existing bank account?</label>
+        <div class="option-cards col-3">
+          <label class="opt-card">
+            <input type="radio" name="has_bank" value="yes_commercial" checked>
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">Yes — Bank</div>
+              <div class="opt-card-sub">Access, GT, Zenith, UBA etc.</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="has_bank" value="yes_mfb">
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">Yes — MFB</div>
+              <div class="opt-card-sub">Microfinance bank account</div>
+            </div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="has_bank" value="no">
+            <div class="opt-card-body" style="text-align:center;align-items:center">
+              <div class="opt-card-title">No account</div>
+              <div class="opt-card-sub">We'll help you open one</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary btn-lg" onclick="nextStep()">
+          <span class="btn-text">Continue →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 5: REVIEW & SUBMIT ────────────────────────────────────── -->
+    <div class="step-panel fade-in" id="step-5">
+      <div class="step-eyebrow">Step 5 of 5 — Review &amp; Submit</div>
+      <h1 class="step-h1">Almost <span class="serif">there.</span><br>Review your application</h1>
+      <p class="step-sub">Check your details below. Once submitted, a SolarGuard coordinator will contact you within 24 hours to confirm your system and lender match.</p>
+
+      <!-- Summary card -->
+      <div id="review-summary" style="background:var(--white);border:1.5px solid var(--g2);border-radius:20px;padding:24px;margin-bottom:28px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <div style="font-family:var(--f-display);font-size:16px;font-weight:800;color:var(--earth)">Application Summary</div>
+          <button onclick="goTo(1)" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--green);font-weight:600;font-family:var(--f-body)">Edit</button>
+        </div>
+        <div id="summary-rows"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Lender Partner <span class="opt">(optional — we'll match you if blank)</span></label>
+        <select id="preferred_lender">
+          <option value="">— Let SolarGuard match me —</option>
+          <option value="assets_mfb">ASSETS MFB</option>
+          <option value="corestep_mfb">Corestep MFB</option>
+          <option value="other">Other / Not sure</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Additional notes <span class="opt">(optional)</span></label>
+        <textarea id="notes" placeholder="Any additional information about your property, power needs, or questions for the installer…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>How did you hear about SolarGuard?</label>
+        <select id="source">
+          <option value="">— Select —</option>
+          <option>Social media</option>
+          <option>Friend or family referral</option>
+          <option>Installer recommendation</option>
+          <option>Bank / MFB recommendation</option>
+          <option>Online search</option>
+          <option>Radio or TV</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-divider">Consents &amp; Agreements</div>
+
+      <label class="check-row">
+        <input type="checkbox" id="consent_data">
+        <span class="check-label">I consent to my personal data being shared with SolarGuard's lender and installer partners for the purpose of processing this solar financing application. <a href="#">Privacy Policy</a></span>
+      </label>
+      <div class="err-msg" id="err-consent-data">You must consent to data sharing to continue</div>
+
+      <label class="check-row">
+        <input type="checkbox" id="consent_terms">
+        <span class="check-label">I have read and agree to SolarGuard's <a href="#">Terms of Service</a> and understand this is a financing application, not a confirmed loan offer.</span>
+      </label>
+      <div class="err-msg" id="err-consent-terms">Please accept the terms of service</div>
+
+      <label class="check-row">
+        <input type="checkbox" id="consent_marketing">
+        <span class="check-label">I agree to receive updates on my application and relevant SolarGuard news by SMS and email. <span style="color:var(--g3)">(Optional)</span></span>
+      </label>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-sun btn-lg" id="submit-btn" onclick="submitForm()">
+          <div class="spinner"></div>
+          <span class="btn-text">Submit Application →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── SUCCESS ────────────────────────────────────────────────────── -->
+    <div id="success-screen">
+      <div class="success-icon">☀️</div>
+      <h2 class="success-h">You're on your way to <span class="serif">free energy.</span></h2>
+      <p class="success-p">Your application has been submitted. A SolarGuard coordinator will call you within 24 hours to confirm your system size, lender match, and installer assignment.</p>
+      <div class="ref-box">
+        <div class="ref-label">Your Application Reference</div>
+        <div class="ref-code" id="ref-code">SGD-2025-XXXXX</div>
+      </div>
+      <p style="font-size:13px;color:var(--g5);margin-bottom:20px">Save this reference number. You'll need it to track your application.</p>
+      <div class="success-next">
+        <a href="index.html" class="btn btn-primary btn-lg btn-full">Back to SolarGuard</a>
+        <button class="btn btn-ghost btn-full" onclick="window.print()">Download Confirmation</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── ASIDE COLUMN ──────────────────────────────────────────────────── -->
+  <aside class="aside-col">
+    <div class="aside-top">
+      <div class="aside-logo">
+        <span class="aside-logo-sg" style="color:#fff;font-size:17px">Solar</span><span class="aside-logo-sg" style="color:var(--sun);font-size:17px">Guard</span>
+        <div class="aside-logo-dot"></div>
+      </div>
+      <div class="aside-heading">Solar that pays<br>for <span class="serif">itself.</span></div>
+      <div class="aside-sub">Most customers spend less on monthly repayments than they currently spend on generator fuel.</div>
+    </div>
+
+    <div class="aside-body">
+      <div class="aside-live">
+        <div class="aside-live-dot"></div>
+        <span>512 active systems monitored live across Nigeria</span>
+      </div>
+
+      <div style="height:20px"></div>
+
+      <div class="aside-stats">
+        <div class="aside-stat">
+          <div class="aside-stat-val">₦1.2B</div>
+          <div class="aside-stat-lbl">loans facilitated</div>
+        </div>
+        <div class="aside-stat">
+          <div class="aside-stat-val">87+</div>
+          <div class="aside-stat-lbl">certified installers</div>
+        </div>
+        <div class="aside-stat">
+          <div class="aside-stat-val">98.1%</div>
+          <div class="aside-stat-lbl">fleet uptime</div>
+        </div>
+        <div class="aside-stat">
+          <div class="aside-stat-val">24hr</div>
+          <div class="aside-stat-lbl">application response</div>
+        </div>
+      </div>
+
+      <div class="trust-items">
+        <div class="trust-item">
+          <div class="trust-icon">🏦</div>
+          <div>
+            <div class="trust-title">Loans from licensed lenders</div>
+            <div class="trust-body">Your financing comes from regulated Nigerian banks and MFBs — not SolarGuard. SolarGuard is just the platform.</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">📡</div>
+          <div>
+            <div class="trust-title">SGM-100 live monitoring</div>
+            <div class="trust-body">Every system we finance gets a SolarGuard IoT monitor installed at no extra charge. You can check your system from your phone 24/7.</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">✅</div>
+          <div>
+            <div class="trust-title">Verified installers only</div>
+            <div class="trust-body">Your installer has passed our background check, skills assessment, and signed a quality SLA. You are protected.</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <div>
+            <div class="trust-title">Your data is protected</div>
+            <div class="trust-body">256-bit encrypted. Never sold. Shared only with your lender and installer to process your application.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aside-lenders">
+      <div class="aside-lenders-lbl">Lending Partners</div>
+      <div class="lender-pills">
+        <div class="lender-pill">ASSETS MFB</div>
+        <div class="lender-pill">Corestep MFB</div>
+        <div class="lender-pill">More coming soon</div>
+      </div>
+    </div>
+  </aside>
+
+</div><!-- /.page-shell -->
+
+<script>
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let currentStep = 1;
+const TOTAL_STEPS = 5;
+
+// ─── STEP NAVIGATION ───────────────────────────────────────────────────────
+function goTo(n) {
+  if (n < 1 || n > TOTAL_STEPS) return;
+  document.getElementById(`step-${currentStep}`).classList.remove('active');
+
+  const dots = document.querySelectorAll('.step-dot');
+  dots[currentStep-1].classList.remove('active');
+  if (n > currentStep) dots[currentStep-1].classList.add('done');
+
+  currentStep = n;
+  const panel = document.getElementById(`step-${currentStep}`);
+  panel.classList.add('active');
+  panel.classList.remove('fade-in');
+  void panel.offsetWidth;
+  panel.classList.add('fade-in');
+
+  dots[currentStep-1].classList.remove('done');
+  dots[currentStep-1].classList.add('active');
+
+  document.getElementById('step-num').textContent = currentStep;
+  document.getElementById('progress-fill').style.width = ((currentStep / TOTAL_STEPS) * 100) + '%';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (currentStep === 5) buildSummary();
+}
+
+function nextStep() {
+  if (!validateStep(currentStep)) return;
+  if (currentStep < TOTAL_STEPS) goTo(currentStep + 1);
+}
+function prevStep() {
+  if (currentStep > 1) goTo(currentStep - 1);
+}
+
+// ─── VALIDATION ─────────────────────────────────────────────────────────────
+function validateStep(step) {
+  clearErrors();
+  let ok = true;
+
+  if (step === 2) {
+    if (!val('firstName')) { showErr('firstName', 'err-firstName'); ok = false; }
+    if (!val('lastName'))  { showErr('lastName',  'err-lastName');  ok = false; }
+    const ph = val('phone').replace(/\s/g,'');
+    if (!ph || !/^(\+234|0)[789]\d{9}$/.test(ph)) { showErr('phone', 'err-phone'); ok = false; }
+    const em = val('email');
+    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { showErr('email', 'err-email'); ok = false; }
+    if (!val('state')) { showErr('state', 'err-state'); ok = false; }
+    if (!val('city'))  { showErr('city',  'err-city');  ok = false; }
+  }
+
+  if (step === 4) {
+    if (!val('income_range')) { showErr('income_range', 'err-income'); ok = false; }
+  }
+
+  if (step === 5) {
+    if (!document.getElementById('consent_data').checked) {
+      document.getElementById('err-consent-data').classList.add('show'); ok = false;
+    }
+    if (!document.getElementById('consent_terms').checked) {
+      document.getElementById('err-consent-terms').classList.add('show'); ok = false;
+    }
+  }
+
+  return ok;
+}
+
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+function showErr(inputId, errId) {
+  const el = document.getElementById(inputId);
+  if (el) el.classList.add('err');
+  const em = document.getElementById(errId);
+  if (em) em.classList.add('show');
+}
+function clearErrors() {
+  document.querySelectorAll('.err').forEach(el => el.classList.remove('err'));
+  document.querySelectorAll('.err-msg.show').forEach(el => el.classList.remove('show'));
+}
+
+// Clear error on input
+document.addEventListener('input', e => {
+  if (e.target.matches('input,select,textarea')) {
+    e.target.classList.remove('err');
+    const errEl = document.getElementById('err-' + e.target.id);
+    if (errEl) errEl.classList.remove('show');
+  }
+});
+
+// ─── FUEL SLIDER ────────────────────────────────────────────────────────────
+function updateFuelSlider(v) {
+  const max = 300000;
+  const pct = (v / max) * 100;
+  document.getElementById('fuel-fill').style.width = pct + '%';
+  document.getElementById('fuel-val').textContent = v == 0 ? '₦0' :
+    '₦' + Number(v).toLocaleString();
+
+  // Auto-suggest system size based on monthly fuel spend
+  const cards = document.querySelectorAll('input[name="system_size"]');
+  if      (v < 50000)  cards[0].checked = true; // 1.5kva
+  else if (v < 80000)  cards[1].checked = true; // 2.5kva
+  else if (v < 110000) cards[2].checked = true; // 3.5kva
+  else if (v < 160000) cards[3].checked = true; // 5kva
+  else if (v < 230000) cards[4].checked = true; // 8kva
+  else                 cards[5].checked = true; // 10kva
+  updateEstimate();
+}
+
+// ─── ESTIMATE ────────────────────────────────────────────────────────────────
+// System packages — rates: { tenor_months: monthly_instalment }  null = not offered for this package
+// gen: estimated monthly generator/fuel spend for a property of this size
+const sysData = {
+  '1.5kva': {
+    label:    '1.5 kVA',
+    outright:  1223854,
+    rates:    { 12: 82814,   18: null,    24: null,    36: null    },
+    gen:       45000,
+  },
+  '2.5kva': {
+    label:    '2.5 kVA',
+    outright:  1834430,
+    rates:    { 12: 256750,  18: null,    24: null,    36: null    },
+    gen:       70000,
+  },
+  '3.5kva': {
+    label:    '3.5 kVA',
+    outright:  2837193,
+    rates:    { 12: 169898,  18: 143930,  24: 132675,  36: null    },
+    gen:       95000,
+  },
+  '5kva': {
+    label:    '5 kVA Standard',
+    outright:  3473405,
+    rates:    { 12: 235034,  18: 162426,  24: 126222,  36: 90216   },
+    gen:      140000,
+  },
+  '8kva': {
+    label:    '8 kVA',
+    outright:  6759610,
+    rates:    { 12: 882086,  18: 316098,  24: 245641,  36: 175570  },
+    gen:      210000,
+  },
+  '10kva': {
+    label:    '10 kVA Premium',
+    outright:  8544120,
+    rates:    { 12: 1389050, 18: 722150,  24: 514800,  36: 390000  },
+    gen:      280000,
+  },
+};
+
+// Grey-out tenor cards that aren't available for the selected package,
+// and auto-select the first available tenor if the current one is greyed.
+function syncTenorCards(size) {
+  const avail = sysData[size].rates;
+  let hasChecked = false;
+
+  document.querySelectorAll('input[name="tenor"]').forEach(input => {
+    const t    = Number(input.value);
+    const card = input.closest('.opt-card');
+    const ok   = avail[t] != null;
+    card.style.opacity       = ok ? '1'    : '0.3';
+    card.style.pointerEvents = ok ? 'auto' : 'none';
+    if (input.checked && !ok) input.checked = false;
+    if (input.checked && ok)  hasChecked    = true;
+  });
+
+  // If nothing is checked, pick first available
+  if (!hasChecked) {
+    const firstKey = Object.keys(avail).find(k => avail[k] != null);
+    if (firstKey) {
+      const fb = document.querySelector(`input[name="tenor"][value="${firstKey}"]`);
+      if (fb) fb.checked = true;
+    }
+  }
+}
+
+function updateEstimate() {
+  const size = document.querySelector('input[name="system_size"]:checked')?.value || '1.5kva';
+  syncTenorCards(size);
+
+  const tenorEl = document.querySelector('input[name="tenor"]:checked');
+  if (!tenorEl) return;
+  const tenor   = Number(tenorEl.value);
+  const d       = sysData[size];
+  const monthly = d.rates[tenor];
+  if (!monthly) return;
+
+  const saving = d.gen - monthly;
+
+  // ── Update estimate box ──────────────────────────────────────────────────
+  document.getElementById('est-monthly').textContent = '₦' + monthly.toLocaleString();
+  document.getElementById('est-cost').textContent    = '₦' + d.outright.toLocaleString();
+  document.getElementById('est-sub').textContent     = `${d.label} · ${tenor} months · indicative rate`;
+
+  const sEl = document.getElementById('est-saving');
+  if (saving > 0) {
+    sEl.textContent = 'Save ~₦' + saving.toLocaleString() + '/mo';
+    sEl.className   = 'eb-cell-val positive';
+  } else {
+    sEl.textContent = '₦' + Math.abs(saving).toLocaleString() + ' above fuel cost';
+    sEl.className   = 'eb-cell-val';
+  }
+
+  // ── Update price chip on every package card for the selected tenor ───────
+  document.querySelectorAll('input[name="system_size"]').forEach(input => {
+    const key   = input.value;
+    const card  = input.closest('.opt-card');
+    const chip  = card.querySelector('.opt-card-price');
+    if (!chip) return;
+    const pkg   = sysData[key];
+    const rate  = pkg.rates[tenor];
+    if (rate) {
+      chip.textContent = `₦${rate.toLocaleString()}/mo · outright ₦${pkg.outright.toLocaleString()}`;
+      chip.style.opacity = '1';
+    } else {
+      // Tenor not available for this package — show next available rate
+      const fallbackKey = Object.keys(pkg.rates).find(k => pkg.rates[k] != null);
+      const fallbackRate = fallbackKey ? pkg.rates[fallbackKey] : null;
+      chip.textContent = fallbackRate
+        ? `₦${fallbackRate.toLocaleString()}/mo (${fallbackKey}mo) · ₦${pkg.outright.toLocaleString()} outright`
+        : `₦${pkg.outright.toLocaleString()} outright`;
+      chip.style.opacity = '0.6';
+    }
+  });
+}
+
+document.addEventListener('change', e => {
+  if (e.target.name === 'system_size' || e.target.name === 'tenor') updateEstimate();
+});
+
+// ─── SUMMARY ─────────────────────────────────────────────────────────────────
+function buildSummary() {
+  const items = [
+    ['Applicant Type',     getRadio('applicant_type')],
+    ['Energy Situation',   getRadio('energy_situation')?.replace(/_/g,' ')],
+    ['Name',               [val('firstName'), val('lastName')].filter(Boolean).join(' ') || '—'],
+    ['Phone',              val('phone') || '—'],
+    ['Email',              val('email') || '—'],
+    ['State',              val('state') || '—'],
+    ['City',               val('city') || '—'],
+    ['System Size',        sysData[getRadio('system_size')]?.label || getRadio('system_size')],
+    ['Loan Tenor',         getRadio('tenor') + ' months'],
+    ['Employment',         getRadio('employment')?.replace(/_/g,' ')],
+    ['Monthly Income',     val('income_range')?.replace(/-/g,' ') || '—'],
+  ];
+
+  const rows = items.map(([k, v]) =>
+    `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g1);font-size:14px">
+      <span style="color:var(--g5)">${k}</span>
+      <span style="color:var(--g7);font-weight:600;text-transform:capitalize">${v || '—'}</span>
+    </div>`
+  ).join('');
+  document.getElementById('summary-rows').innerHTML = rows;
+}
+
+function getRadio(name) {
+  return document.querySelector(`input[name="${name}"]:checked`)?.value || '—';
+}
+
+// ─── SUBMIT ──────────────────────────────────────────────────────────────────
+function submitForm() {
+  if (!validateStep(5)) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  // Simulate API call
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+
+    // Hide steps UI
+    document.getElementById('step-dots').style.display = 'none';
+    document.getElementById('step-5').style.display = 'none';
+    document.getElementById('progress-fill').style.width = '100%';
+    document.getElementById('step-label').textContent = 'Application Submitted';
+
+    // Generate ref number
+    const ref = 'SGD-2025-' + Math.floor(10000 + Math.random() * 90000);
+    document.getElementById('ref-code').textContent = ref;
+
+    // Show success
+    const ss = document.getElementById('success-screen');
+    ss.style.display = 'flex';
+    ss.classList.add('fade-in');
+  }, 2200);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+updateEstimate();
+</script>
+</body>
+</html>
